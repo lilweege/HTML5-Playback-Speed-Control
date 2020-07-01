@@ -1,0 +1,15 @@
+{
+	"manifest_version": 2,
+	"name": "HTML5 Playback Speed Control",
+	"version": "1.0",
+	"description": "Increase or decrease the playback speed of HTML5 video players from 0 to 16 times.",
+	"icons": {
+		"128": "icon128.png"
+	},
+	"content_scripts": [
+		{
+			"matches": ["<all_urls>"],
+			"js": ["playbackSpeedControl.js"]
+		}
+	]
+}

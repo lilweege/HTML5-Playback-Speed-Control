@@ -3,4 +3,4 @@ Simple google chrome extension which can change the playback rate of any video p
 inspired by https://chrome.google.com/webstore/detail/youtube-playback-speed-co/hdannnflhlmdablckfkjpleikpphncik
 
 # Why use this?
-cause it works on KissAnime with BetaX Server
+cause it works on other sites which use HTML5 player, as well as YouTube

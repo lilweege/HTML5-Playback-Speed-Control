@@ -1,11 +1,15 @@
-let player = document.querySelector('video')
+let player
+const findPlayer = () => {
+	if (!player)
+		player = document.querySelector('video')
+}
 
 const
 	min = 0,
 	max = 16,
 	interval = 0.5,
 	defaultSpeed = 1
-let speed = player ? player.playbackRate : defaultSpeed
+let speed
 
 let speedP = document.createElement("P")
 speedP.style.position = "absolute"
@@ -38,13 +42,14 @@ const updateSpeed = (e) => {
 }
 
 const updatePlayer = () => {
+	findPlayer()
 	if (player) {
 		// change speed
 		player.playbackRate = speed
 		
 		// update text
-		player.parentNode.appendChild(speedP)
 		speedP.innerText = `${speed.toFixed(1)}`
+		player.parentNode.appendChild(speedP)
 	}
 }
 
@@ -53,5 +58,8 @@ document.addEventListener("keydown", (e) => {
 		updatePlayer()
 })
 
-
-updatePlayer()
+window.addEventListener("load", () => {
+	findPlayer()
+	speed = player ? player.playbackRate : defaultSpeed
+	updatePlayer()
+})

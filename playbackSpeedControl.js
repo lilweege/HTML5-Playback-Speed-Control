@@ -1,15 +1,12 @@
-let player
-const findPlayer = () => {
-	if (!player)
-		player = document.querySelector('video')
-}
-
 const
 	min = 0,
 	max = 16,
-	interval = 0.5,
 	defaultSpeed = 1
-let speed
+
+let
+	speed = defaultSpeed,
+	interval = 0.5
+
 
 let speedP = document.createElement("P")
 speedP.style.position = "absolute"
@@ -17,6 +14,36 @@ speedP.style.color = "white"
 speedP.tabIndex = 100
 speedP.style.right = "5px"
 speedP.style.top = "5px"
+
+let player
+
+const findPlayer = () => {
+	if (player)
+		return true
+	
+	player = document.querySelector('video')
+	if (!player)
+		return false
+	
+	// assume a player doesn't disappear after found
+	player.parentNode.appendChild(speedP)
+	speedP.addEventListener("click", (e) => {
+		e.stopPropagation()
+		if (speed != defaultSpeed) {
+			speed  = defaultSpeed
+			updatePlayer()
+		}
+	})
+	player.addEventListener("ratechange", (e) => {
+		if (speed != player.playbackRate) {
+			speed  = player.playbackRate
+			updatePlayer()
+		}
+	})
+	speed = player.playbackRate
+	updatePlayer()
+	return true
+}
 
 const updateSpeed = (e) => {
 	// increment/decrement
@@ -42,24 +69,16 @@ const updateSpeed = (e) => {
 }
 
 const updatePlayer = () => {
-	findPlayer()
-	if (player) {
-		// change speed
-		player.playbackRate = speed
-		
-		// update text
-		speedP.innerText = `${speed.toFixed(1)}`
-		player.parentNode.appendChild(speedP)
-	}
+	player.playbackRate = speed
+	speedP.innerText = `${speed.toFixed(2)}`
 }
 
 document.addEventListener("keydown", (e) => {
 	if (updateSpeed(e))
-		updatePlayer()
+		if (findPlayer())
+			updatePlayer()
 })
 
 window.addEventListener("load", () => {
 	findPlayer()
-	speed = player ? player.playbackRate : defaultSpeed
-	updatePlayer()
 })

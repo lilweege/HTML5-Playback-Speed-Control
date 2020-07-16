@@ -6,6 +6,7 @@ body {
 	width: 200px;
 	/* height: 200px; */
 	height: 170px;
+	overflow: hidden;
 	margin: 0;
 	padding: 0;
 	color: white;
@@ -31,6 +32,7 @@ body {
 	border-radius: 5px;
 	border: none;
 	background: white;
+	outline: none;
 }
 #box input[type="number"],
 #box input[type="text"] {
@@ -53,14 +55,51 @@ body {
 	cursor: default;
 	width: 160px;
 	height: 45px;
-	margin-top: 15px;
+	margin-top: 23px;
 	border-radius: 10px;
 	border: 2px solid #5F85DB;
 	background-color: #353941;
 	color: white;
 	font-size: 20px;
+	outline: none;
 }
 #apply:hover {
 	border: 2px solid #90B8F8;
 	cursor: pointer;
+}
+
+#alert {
+	font-size: 20px;
+	position: absolute;
+	width: 100px;
+	height: 30px;
+	background: green;
+	top: 0;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	border-radius: 20px;
+	visibility: hidden;
+	opacity: 0;
+}
+@keyframes fadeInOut {
+	0% {
+		top: 0px;
+		opacity: 0;
+		visibility: visible;
+	}
+	25% {
+		top: 20px;
+		opacity: 1;
+		visibility: visible;
+	}
+	75% {
+		top: 20px;
+		opacity: 1;
+		visibility: visible;
+	}
+	100% {
+		top: 20px;
+		opacity: 0;
+		visibility: hidden;
+	}
 }

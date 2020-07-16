@@ -9,11 +9,14 @@
 	"content_scripts": [
 		{
 			"matches": ["<all_urls>"],
-			"js": ["playbackSpeedControl.js"]
+			"js": ["playbackSpeedControl.js"],
+			"run_at": "document_end"
 		}
 	],
 	"browser_action": {
 		"default_popup": "popup.html"
 	},
-	"permissions": ["storage"]
+	"permissions": [
+		"storage"
+	]
 }

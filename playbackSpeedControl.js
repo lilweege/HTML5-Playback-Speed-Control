@@ -22,9 +22,12 @@ const findPlayer = () => {
 		return true
 	
 	player = document.querySelector('video')
-	if (!player)
+	if (!player) {
+		// console.log("not found")
 		return false
+	}
 	
+	// console.log("found")
 	player.parentNode.appendChild(speedP)
 	
 	speedP.addEventListener("click", (e) => {
@@ -40,6 +43,7 @@ const findPlayer = () => {
 			updatePlayer()
 		}
 	})
+	
 	speed = player.playbackRate
 	updatePlayer()
 	return true
@@ -69,28 +73,30 @@ const updateSpeed = (e) => {
 }
 
 const updatePlayer = () => {
-	console.log(speed)
 	player.playbackRate = speed
 	speedP.innerText = `${speed.toFixed(2)}`
 }
 
 document.addEventListener("keydown", (e) => {
-	if (updateSpeed(e))
-		if (findPlayer())
+	if (findPlayer())
+		if (updateSpeed(e))
 			updatePlayer()
 })
 
-findPlayer()
+
+chrome.storage.onChanged.addListener((changes) => {
+	if (changes.display)
+		speedP.hidden = !changes.display.newValue
+	if (changes.interval)
+		interval = changes.interval.newValue
+})
+
 chrome.storage.local.get('display', (data) => {
 	speedP.hidden = !data.display
 })
 chrome.storage.local.get('interval', (data) => {
 	interval = data.interval
 })
-chrome.storage.onChanged.addListener((changes) => {
-	console.log(changes)
-	if (changes.display)
-		speedP.hidden = !changes.display.newValue
-	if (changes.interval)
-		interval = changes.interval.newValue
-})
+
+// console.log("searching")
+findPlayer()

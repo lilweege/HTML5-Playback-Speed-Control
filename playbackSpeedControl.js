@@ -25,8 +25,8 @@ const findPlayer = () => {
 	if (!player)
 		return false
 	
-	// assume a player doesn't disappear after found
 	player.parentNode.appendChild(speedP)
+	
 	speedP.addEventListener("click", (e) => {
 		e.stopPropagation()
 		if (speed != defaultSpeed) {
@@ -69,6 +69,7 @@ const updateSpeed = (e) => {
 }
 
 const updatePlayer = () => {
+	console.log(speed)
 	player.playbackRate = speed
 	speedP.innerText = `${speed.toFixed(2)}`
 }
@@ -79,6 +80,17 @@ document.addEventListener("keydown", (e) => {
 			updatePlayer()
 })
 
-window.addEventListener("load", () => {
-	findPlayer()
+findPlayer()
+chrome.storage.local.get('display', (data) => {
+	speedP.hidden = !data.display
+})
+chrome.storage.local.get('interval', (data) => {
+	interval = data.interval
+})
+chrome.storage.onChanged.addListener((changes) => {
+	console.log(changes)
+	if (changes.display)
+		speedP.hidden = !changes.display.newValue
+	if (changes.interval)
+		interval = changes.interval.newValue
 })

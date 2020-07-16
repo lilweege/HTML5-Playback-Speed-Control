@@ -3,9 +3,21 @@
 <head>
 	<meta charset="UTF-8">
 	<title>popup</title>
+    <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-	<button id="test">test</button>
+	<div id="box">
+		<label for="interval">Interval: </label>
+		<input id="interval" type="number" min="0" max="1" step="0.05" value="0.5">
+		<br>
+		<!-- <label for="keys">Keys: &nbsp;&nbsp;&nbsp;&nbsp;</label> -->
+		<!-- <input id="keys" type="text" value="*+-"> -->
+		<!-- <br> -->
+		<label for="display">Display: </label>
+		<input id="display" type="checkbox" checked="true">
+		<br>
+		<button id="apply">Apply Changes</button>
+	</div>
 	<script src="popup.js"></script>
 </body>
 </html>

@@ -5,25 +5,25 @@ document.addEventListener('DOMContentLoaded', () => {
 		popupDisplay = document.getElementById('display'),
 		popupApply = document.getElementById('apply')
 	
-	chrome.storage.local.get('interval', (data) => {
+	chrome.storage.sync.get('interval', (data) => {
 		popupInterval.value = data.interval.toString()
 	})
-	// chrome.storage.local.get('keys', (data) => {
+	// chrome.storage.sync.get('keys', (data) => {
 		// popupKeys.value = data.keys.join("")
 	// })
-	chrome.storage.local.get('display', (data) => {
+	chrome.storage.sync.get('display', (data) => {
 		popupDisplay.checked = data.display
 	})
 	
 	popupApply.addEventListener('click', () => {
 		
-		chrome.storage.local.set({
+		chrome.storage.sync.set({
 			interval: parseFloat(popupInterval.value),
 			// keys: popupKeys.value.split(""),
 			display: popupDisplay.checked
 		}, () => {
 			popupAlert.style.animation = "fadeInOut 1s";
-			var newone = popupAlert.cloneNode(true);
+			let newone = popupAlert.cloneNode(true);
 			popupAlert.parentNode.replaceChild(newone, popupAlert);
 			popupAlert = newone;
 		})

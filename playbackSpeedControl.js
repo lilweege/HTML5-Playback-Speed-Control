@@ -22,7 +22,7 @@ const findPlayer = () => {
 		return true
 	
 	player = document.querySelector('video')
-	console.log(player ? "found" : "not found")
+	// console.log(player ? "found" : "not found")
 	if (!player)
 		return false
 	

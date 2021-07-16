@@ -75,6 +75,13 @@ const updatePlayer = () => {
 	speedP.innerText = `${speed.toFixed(2)}`
 }
 
+// a recent youtube patch seems to have changed page loading
+// manually update the player in this case
+window.addEventListener('yt-page-data-updated', e => {
+	if (findPlayer())
+		updatePlayer()
+})
+
 document.addEventListener("keydown", (e) => {
 	if (updateSpeed(e))
 		if (findPlayer())

@@ -21,21 +21,20 @@ const findPlayer = () => {
 	if (player)
 		return true
 	
-	player = document.querySelector('video')
-	// console.log(player ? "found" : "not found")
+	player = document.querySelector("video")
 	if (!player)
 		return false
 	
 	player.parentNode.appendChild(speedP)
 	
-	speedP.addEventListener("click", (e) => {
+	speedP.addEventListener("click", e => {
 		e.stopPropagation()
 		if (speed != defaultSpeed) {
 			speed  = defaultSpeed
 			updatePlayer()
 		}
 	})
-	player.addEventListener("ratechange", (e) => {
+	player.addEventListener("ratechange", e => {
 		if (speed != player.playbackRate) {
 			speed  = player.playbackRate
 			updatePlayer()
@@ -47,7 +46,7 @@ const findPlayer = () => {
 	return true
 }
 
-const updateSpeed = (e) => {
+const updateSpeed = e => {
 	// increment/decrement
 	switch (e.key) {
 		case "+":
@@ -74,33 +73,32 @@ const updatePlayer = () => {
 	player.playbackRate = speed
 	speedP.innerText = `${speed.toFixed(2)}`
 }
+const tryUpdatePlayer = () => {
+	if (findPlayer())
+		updatePlayer()
+}
 
 // a recent youtube patch seems to have changed page loading
 // manually update the player in this case
-window.addEventListener('yt-page-data-updated', e => {
-	if (findPlayer())
-		updatePlayer()
-})
-
-document.addEventListener("keydown", (e) => {
+window.addEventListener("yt-page-data-updated", tryUpdatePlayer)
+document.addEventListener("keydown", e => {
 	if (updateSpeed(e))
-		if (findPlayer())
-			updatePlayer()
+		tryUpdatePlayer()
 })
 
 
-chrome.storage.onChanged.addListener((changes) => {
+chrome.storage.onChanged.addListener(changes => {
 	if (changes.display)
 		speedP.hidden = !changes.display.newValue
 	if (changes.interval)
 		interval = changes.interval.newValue
 })
 
-chrome.storage.sync.get('display', (data) => {
+chrome.storage.sync.get("display", data => {
 	speedP.hidden = !data.display
 })
-chrome.storage.sync.get('interval', (data) => {
+chrome.storage.sync.get("interval", data => {
 	interval = data.interval
 })
 
-findPlayer()
+tryUpdatePlayer()

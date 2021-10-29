@@ -14,6 +14,7 @@ speedP.style.color = "white"
 speedP.tabIndex = 100
 speedP.style.right = "5px"
 speedP.style.top = "5px"
+speedP.style.fontSize = "1.5rem"
 
 let player
 

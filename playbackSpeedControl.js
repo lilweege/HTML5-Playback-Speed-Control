@@ -15,7 +15,9 @@ speedP.tabIndex = 100
 speedP.style.right = "5px"
 speedP.style.top = "5px"
 speedP.style.fontSize = "1.5rem"
-
+speedP.style.backgroundColor = "#00000080"
+speedP.style.borderRadius = "0.5rem"
+speedP.style.padding = "0.2rem"
 let player
 
 const findPlayer = () => {

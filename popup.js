@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		popupInterval = document.getElementById('interval'),
 		// popupKeys = document.getElementById('keys'),
 		popupDisplay = document.getElementById('display'),
+		popupColor = document.getElementById('color'),
+		popupAlpha = document.getElementById('alpha'),
 		popupApply = document.getElementById('apply')
 	
 	chrome.storage.sync.get('interval', (data) => {
@@ -14,13 +16,21 @@ document.addEventListener('DOMContentLoaded', () => {
 	chrome.storage.sync.get('display', (data) => {
 		popupDisplay.checked = data.display
 	})
+	chrome.storage.sync.get('color', (data) => {
+		popupColor.value = data.color
+	})
+	chrome.storage.sync.get('alpha', (data) => {
+		popupAlpha.value = data.alpha.toString()
+	})
 	
+	// TODO: fix error on first run when no storage exists
 	popupApply.addEventListener('click', () => {
-		
 		chrome.storage.sync.set({
 			interval: parseFloat(popupInterval.value),
 			// keys: popupKeys.value.split(""),
-			display: popupDisplay.checked
+			display: popupDisplay.checked,
+			color: popupColor.value,
+			alpha: parseFloat(popupAlpha.value),
 		}, () => {
 			popupAlert.style.animation = "fadeInOut 1s";
 			let newone = popupAlert.cloneNode(true);

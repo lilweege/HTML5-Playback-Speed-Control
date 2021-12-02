@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>popup</title>
-    <link rel="stylesheet" href="popup.css">
+	<link rel="stylesheet" href="popup.css">
 </head>
 <body>
 	<div id="box">
@@ -15,6 +15,10 @@
 		<!-- <br> -->
 		<label for="display">Display: </label>
 		<input id="display" type="checkbox" checked="true">
+		<br>
+		<label for="color">Color: </label>
+		<input id="color" type="color">
+		<input id="alpha" type="number" min="0" max="1" step="0.05" value="0.5" style="width:40px;">
 		<br>
 		<button id="apply">Apply Changes</button>
 		<div id="alert">Success</div>

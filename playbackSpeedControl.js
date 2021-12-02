@@ -7,6 +7,21 @@ let
 	speed = defaultSpeed,
 	interval = 0.5
 
+let bgColor = "#000000"
+let bgAlpha = 0.5
+
+let fltToHex = percent => {
+	console.assert(percent >= 0 && percent <= 1,
+		`Invalid percentage, ${percent} was not between 0 and 1`)
+	percent *= 255
+	let lo = Math.floor(percent % 16)
+	let hi = Math.floor(percent / 16)
+	// NOTE: 65 is 'A'
+	lo = lo < 10 ? ("" + lo) : String.fromCharCode(65 + lo - 10)
+	hi = hi < 10 ? ("" + hi) : String.fromCharCode(65 + hi - 10)
+	return hi + lo
+}
+
 
 let speedP = document.createElement("P")
 speedP.style.position = "absolute"
@@ -15,7 +30,7 @@ speedP.tabIndex = 100
 speedP.style.right = "5px"
 speedP.style.top = "5px"
 speedP.style.fontSize = "1.5rem"
-speedP.style.backgroundColor = "#00000080"
+speedP.style.backgroundColor = `${bgColor}${fltToHex(bgAlpha)}`
 speedP.style.borderRadius = "0.5rem"
 speedP.style.padding = "0.2rem"
 let player
@@ -95,6 +110,13 @@ chrome.storage.onChanged.addListener(changes => {
 		speedP.hidden = !changes.display.newValue
 	if (changes.interval)
 		interval = changes.interval.newValue
+	if (changes.color || changes.alpha) {
+		if (changes.color)
+			bgColor = changes.color.newValue
+		if (changes.alpha)
+			bgAlpha = changes.alpha.newValue
+		speedP.style.backgroundColor = `${bgColor}${fltToHex(bgAlpha)}`
+	}
 })
 
 chrome.storage.sync.get("display", data => {
@@ -102,6 +124,14 @@ chrome.storage.sync.get("display", data => {
 })
 chrome.storage.sync.get("interval", data => {
 	interval = data.interval
+})
+chrome.storage.sync.get("color", data => {
+	bgColor = data.color
+	speedP.style.backgroundColor = `${bgColor}${fltToHex(bgAlpha)}`
+})
+chrome.storage.sync.get("alpha", data => {
+	bgAlpha = data.alpha
+	speedP.style.backgroundColor = `${bgColor}${fltToHex(bgAlpha)}`
 })
 
 tryUpdatePlayer()

@@ -39,7 +39,12 @@ const findPlayer = () => {
 	if (player)
 		return true
 	
-	player = document.querySelector("video")
+	// workaround for youtubes terrible new hover preview feature
+	let players = document.querySelectorAll("video")
+	if (players.length === 0)
+		return false
+	player = players[players.length-1]
+
 	if (!player)
 		return false
 	

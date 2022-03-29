@@ -131,12 +131,16 @@ chrome.storage.sync.get("interval", data => {
 	interval = data.interval
 })
 chrome.storage.sync.get("color", data => {
-	bgColor = data.color
-	speedP.style.backgroundColor = `${bgColor}${fltToHex(bgAlpha)}`
+	if (data.color) {
+		bgColor = data.color
+		speedP.style.backgroundColor = `${bgColor}${fltToHex(bgAlpha)}`
+	}
 })
 chrome.storage.sync.get("alpha", data => {
-	bgAlpha = data.alpha
-	speedP.style.backgroundColor = `${bgColor}${fltToHex(bgAlpha)}`
+	if (data.alpha) {
+		bgAlpha = data.alpha
+		speedP.style.backgroundColor = `${bgColor}${fltToHex(bgAlpha)}`
+	}
 })
 
 tryUpdatePlayer()

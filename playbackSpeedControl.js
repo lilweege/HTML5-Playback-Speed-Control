@@ -43,7 +43,7 @@ const findPlayer = () => {
 	let players = document.querySelectorAll("video")
 	if (players.length === 0)
 		return false
-	player = players[players.length-1]
+	player = players[0]
 
 	if (!player)
 		return false
